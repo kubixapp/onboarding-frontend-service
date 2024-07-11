@@ -1,0 +1,65 @@
+/* Clash Display */
+
+@font-face {
+    font-family: 'Clash Display';
+    src: url("./ClashDisplay/ClashDisplay-Semibold.ttf");
+    font-weight: 600;
+}
+@font-face {
+    font-family: 'Clash Display';
+    src: url("./ClashDisplay/ClashDisplay-Semibold.ttf");
+    font-weight: 500;
+}
+@font-face {
+    font-family: 'Clash Display';
+    src: url("./ClashDisplay/ClashDisplay-Bold.ttf");
+    font-weight: 400;
+}
+@font-face {
+    font-family: 'Clash Display';
+    src: url("./ClashDisplay/ClashDisplay-Medium.ttf");
+    font-weight: 300;
+}
+@font-face {
+    font-family: 'Clash Display';
+    src: url("./ClashDisplay/ClashDisplay-Light.ttf");
+    font-weight: 200;
+}
+@font-face {
+    font-family: 'Clash Display';
+    src: url("./ClashDisplay/ClashDisplay-Extralight.ttf");
+    font-weight: 100;
+}
+
+/* Poppins */
+
+@font-face {
+    font-family: 'Poppins';
+    src: url("./Poppins/Poppins-SemiBold.ttf");
+    font-weight: 600;
+}
+@font-face {
+    font-family: 'Poppins';
+    src: url("./Poppins/Poppins-SemiBold.ttf");
+    font-weight: 500;
+}
+@font-face {
+    font-family: 'Poppins';
+    src: url("./Poppins/Poppins-Bold.ttf");
+    font-weight: 400;
+}
+@font-face {
+    font-family: 'Poppins';
+    src: url("./Poppins/Poppins-Medium.ttf");
+    font-weight: 300;
+}
+@font-face {
+    font-family: 'Poppins';
+    src: url("./Poppins/Poppins-Light.ttf");
+    font-weight: 200;
+}
+@font-face {
+    font-family: 'Poppins';
+    src: url("./Poppins/Poppins-Thin.ttf");
+    font-weight: 100;
+}
