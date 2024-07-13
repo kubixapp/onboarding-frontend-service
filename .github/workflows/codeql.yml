@@ -1,0 +1,69 @@
+name: CodeQL Analysis
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '0 0 * * 0' # Run weekly
+
+jobs:
+  analyze:
+    name: Analyze CodeQL
+    runs-on: ubuntu-latest
+
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'javascript', 'typescript' ]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build project
+      run: npm run build
+
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v2
+      with:
+        languages: ${{ matrix.language }}
+        # Include the Vite output directory if needed
+        paths: .
+
+    - name: Run CodeQL Analysis
+      uses: github/codeql-action/analyze@v2
+      with:
+        output: codeql-sarif-results.sarif
+
+    - name: Upload SARIF file
+      uses: actions/upload-artifact@v3
+      with:
+        name: codeql-sarif
+        path: codeql-sarif-results.sarif
+
+    - name: Parse SARIF and Create Issue
+      id: create_issue
+      run: |
+        results=$(cat codeql-sarif-results.sarif | jq '.runs[0].results')
+        if [ "$results" != "[]" ]; then
+          issues=$(jq -r '.[] | "- \(.message.text) (at \(.locations[0].physicalLocation.artifactLocation.uri):\(.locations[0].physicalLocation.region.startLine))"' <<< "$results")
+          body="CodeQL scan found issues:\n\n$issues"
+          gh issue create --title "CodeQL Scan Results" --body "$body" --labels "codeql"
+        fi
+      env:
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
