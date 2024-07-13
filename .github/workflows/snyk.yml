@@ -22,7 +22,8 @@ jobs:
       - name: Install Node.js and Snyk CLI
         uses: actions/setup-node@v2
         with:
-          node-version: '14'  # adjust Node.js version as needed
+          node-version: '14'   # adjust Node.js version as needed
+      - run: npm install
       - run: npm install -g snyk  # Install Snyk CLI globally (if needed)
 
       # Step 3: Authenticate Snyk CLI with API token
@@ -34,4 +35,4 @@ jobs:
       # Step 4: Run Snyk security scan
       - name: Run Snyk security scan
         run: npx snyk test
-        
+
