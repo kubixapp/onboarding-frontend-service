@@ -34,3 +34,4 @@ jobs:
       # Step 4: Run Snyk security scan
       - name: Run Snyk security scan
         run: npx snyk test
+        
