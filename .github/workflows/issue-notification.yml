@@ -6,20 +6,19 @@ on:
 
 jobs:
   notify-discord:
-    name: Send notification to Discord
     runs-on: ubuntu-latest
-
+    name: Linux Test Job
     steps:
-    - name: Send notification to Discord
-        uses: rjstone/discord-webhook-notify@v1.0.4
-        with:
-            severity: info
-            username: Github Issue Bot
-            color: '#ff00aa'
-            avatarUrl: https://github.githubassets.com/images/modules/logos_page/Octocat.png
-            description: ${{ github.event.issue.title }}
-            details: ${{ github.event.issue.body }}
-            footer: ${{ github.event.issue.html_url }}
-            text: New Issue created.
-            webhookUrl: ${{ secrets.DISCORD_WEBHOOK_URL }}
+    - name: Linux Test Info
+      uses: rjstone/discord-webhook-notify@v1
+      with:
+        severity: info
+        username: Github Issue Bot
+        color: '#ff00aa'
+        avatarUrl: https://github.githubassets.com/images/modules/logos_page/Octocat.png
+        description: ${{ github.event.issue.title }}
+        details: ${{ github.event.issue.body }}
+        footer: ${{ github.event.issue.html_url }}
+        text: New Issue created.
+        webhookUrl: ${{ secrets.DISCORD_WEBHOOK_URL }}
     
