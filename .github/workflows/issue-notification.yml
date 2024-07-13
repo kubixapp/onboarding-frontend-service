@@ -9,14 +9,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Install jq
-      run: sudo apt-get install jq
     - name: Send notification to Discord
       env:
         DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
       run: |
-        ISSUE_TITLE=$(echo "${{ github.event.issue.title }}" | jq -sRr @uri)
-        ISSUE_BODY=$(echo "${{ github.event.issue.body }}" | jq -sRr @uri)
+        ISSUE_TITLE=$(echo "${{ github.event.issue.title }}")
+        ISSUE_BODY=$(echo "${{ github.event.issue.body }}")
         ISSUE_URL=${{ github.event.issue.html_url }}
         
         PAYLOAD='{"content":"**New Issue Created**\n\nTitle: '${ISSUE_TITLE}'\n\nDescription: '${ISSUE_BODY}'\n\nURL: '${ISSUE_URL}'"}'
