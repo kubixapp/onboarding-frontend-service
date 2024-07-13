@@ -1,0 +1,55 @@
+name: Snyk Security Scan
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '0 0 * * 0' # Run weekly
+
+jobs:
+  snyk:
+    name: Snyk Security Scan
+    runs-on: ubuntu-latest
+
+    permissions:
+      actions: read
+      contents: read
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run Snyk to check for vulnerabilities
+      uses: snyk/actions/node@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      with:
+        args: test --json-file-output=snyk-results.json
+
+    - name: Upload Snyk results
+      uses: actions/upload-artifact@v3
+      with:
+        name: snyk-results
+        path: snyk-results.json
+
+    - name: Parse Snyk results and create issue
+      id: create_issue
+      run: |
+        results=$(cat snyk-results.json | jq '.vulnerabilities')
+        if [ "$results" != "[]" ]; then
+          issues=$(jq -r '.[] | "- \(.title) (\(.from | join(" > ")))\n  Severity: \(.severity)\n  Description: \(.description)"' <<< "$results")
+          body="Snyk security scan found vulnerabilities:\n\n$issues"
+          gh issue create --title "Snyk Security Scan Results" --body "$body" --labels "snyk"
+        fi
+      env:
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
