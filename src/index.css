@@ -5,3 +5,22 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+/*  ========= Custom Button Styles =========  */
+
+.white-button {
+  background-color: #fff;
+  color: #1a1c21;
+}
+
+.black-button {
+  background-color: #1a1c21;
+  color: #fff;
+}
+
+/*  ========= Custom Button Styles =========  */
+
+
+.no-scroll {
+  overflow: hidden;
+}

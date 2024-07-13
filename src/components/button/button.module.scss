@@ -1,0 +1,20 @@
+.button {
+  width: 100%;
+  border-radius: 12px;
+  padding: 14px 18px;
+  border: none;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  line-height: 24px;
+  font-size: 16px;
+  border: 2px solid #1a1c21;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading_gif {
+  width: 24px;
+  height: 24px;
+}
