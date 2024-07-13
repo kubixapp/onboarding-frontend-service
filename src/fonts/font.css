@@ -35,17 +35,17 @@
 
 @font-face {
     font-family: 'Poppins';
-    src: url("./Poppins/Poppins-SemiBold.ttf");
+    src: url("./Poppins/Poppins-Bold.ttf");
     font-weight: 600;
 }
 @font-face {
     font-family: 'Poppins';
-    src: url("./Poppins/Poppins-SemiBold.ttf");
+    src: url("./Poppins/Poppins-Medium.ttf");
     font-weight: 500;
 }
 @font-face {
     font-family: 'Poppins';
-    src: url("./Poppins/Poppins-Bold.ttf");
+    src: url("./Poppins/Poppins-Medium.ttf");
     font-weight: 400;
 }
 @font-face {

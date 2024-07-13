@@ -1,8 +1,25 @@
 .container {
-    padding: 30px 100px;
+  padding: 30px 100px;
+  width: 100%;
+  min-height: 100vh;
+  height: 100%;
+  background-image: url("/png/background.png");
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
 
-    > .logo {
-        width: 105px;
-        height: 45px;
-    }
+  > .logo {
+    width: 105px;
+    height: 45px;
+  }
+}
+
+@media (max-width: 650px) {
+  .container {
+    padding: 0;
+  }
+  .logo {
+    display: none;
+  }
 }
