@@ -10,13 +10,15 @@ jobs:
 
     steps:
     - name: Send notification to Discord
-      env:
-        DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-      run: |
-        ISSUE_TITLE=$(echo "${{ github.event.issue.title }}")
-        ISSUE_BODY=$(echo "${{ github.event.issue.body }}")
-        ISSUE_URL=${{ github.event.issue.html_url }}
-        
-        PAYLOAD='{"content":"**New Issue Created**\n\nTitle: ${ISSUE_TITLE}\n\nDescription: ${ISSUE_BODY}\n\nURL: ${ISSUE_URL}"}'
-        
-        curl -i -H "Accept: application/json" -H "Content-Type:application/json" -X POST --data ${PAYLOAD} ${DISCORD_WEBHOOK_URL}
+        uses: rjstone/discord-webhook-notify@v1
+        with:
+            severity: info
+            username: Github Issue Bot
+            color: '#ff00aa'
+            avatarUrl: https://github.githubassets.com/images/modules/logos_page/Octocat.png
+            description: ${{ github.event.issue.title }}
+            details: ${{ github.event.issue.body }}
+            footer: ${{ github.event.issue.html_url }}
+            text: New Issue created.
+            webhookUrl: ${{ secrets.DISCORD_WEBHOOK_URL }}
+    
