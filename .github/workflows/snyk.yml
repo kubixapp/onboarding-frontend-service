@@ -1,46 +1,36 @@
-name: Snyk Security Scan
+name: Security Scan
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
+      - develop  # add develop branch
   pull_request:
-    branches: [ main ]
-  schedule:
-    - cron: '0 0 * * 0' # Run weekly
+    branches:
+      - main
+      - develop  # add develop branch
 
 jobs:
-  snyk:
-    name: Snyk Security Scan
+  security_scan:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      # Step 1: Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Cache Node.js dependencies
-      uses: actions/cache@v2
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
+      # Step 2: Install Node.js and Snyk CLI
+      - name: Install Node.js and Snyk CLI
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'  # adjust Node.js version as needed
+      - run: npm install -g snyk  # Install Snyk CLI globally (if needed)
 
-    - name: Install Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '14'
+      # Step 3: Authenticate Snyk CLI with API token
+      - name: Authenticate Snyk CLI
+        run: npx snyk auth ${{ secrets.SNYK_TOKEN }}
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
-    - name: Install dependencies
-      run: npm install
-
-    - name: Run Snyk Security Scan
-      uses: snyk/actions/node@master
-      with:
-        args: test --all-projects --json-file-output=snyk-results.json
-
-    - name: Upload Snyk results
-      uses: actions/upload-artifact@v2
-      with:
-        name: snyk-results
-        path: snyk-results.json
-        
+      # Step 4: Run Snyk security scan
+      - name: Run Snyk security scan
+        run: npx snyk test
