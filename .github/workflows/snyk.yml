@@ -32,7 +32,7 @@ jobs:
     - name: Run Snyk to check for vulnerabilities
       uses: snyk/actions/node@master
       env:
-        SNYK_TOKEN: ${{ secrets.ORG_SNYK_TOKEN }}
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:
         args: test --json-file-output=snyk-results.json
 
@@ -52,4 +52,4 @@ jobs:
           gh issue create --title "Snyk Security Scan Results" --body "$body" --labels "snyk"
         fi
       env:
-        GH_TOKEN: ${{ secrets.ORG_GH_TOKEN }}
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
