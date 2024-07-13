@@ -24,6 +24,10 @@ jobs:
           
       - name: Install dependencies
         run: npm install
+
+      - name: Install codeclimate
+        run: npm install -g codeclimate-cli
+
         
       - name: Run CodeClimate analysis
         run: npm run codeclimate
