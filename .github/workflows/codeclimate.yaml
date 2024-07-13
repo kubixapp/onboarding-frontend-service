@@ -26,7 +26,7 @@ jobs:
         run: npm install
 
       - name: Install codeclimate
-        run: npm install -g codeclimate-cli
+        run: npm install git+https://github.com/codeclimate/codeclimate.git
 
         
       - name: Run CodeClimate analysis
