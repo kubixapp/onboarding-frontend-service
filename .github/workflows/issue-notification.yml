@@ -1,0 +1,19 @@
+name: Notify Discord on Issue Creation
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  notify-discord:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Send notification to Discord
+      env:
+        DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+      run: |
+        ISSUE_TITLE=$(echo "${{ github.event.issue.title }}" | jq -sRr @uri)
+        ISSUE_BODY=$(echo "${{ github.event.issue.body }}" | jq -sRr @uri)
+        ISSUE_URL=${{ github.event.issue.html_url }}
+        curl -X POST -H "Content-Type: application/json" -d "$(jq -n --arg title "${ISSUE_TITLE}" --arg body "${ISSUE_BODY}" --arg url "${ISSUE_URL}" '{content: "**New Issue Created**\n\nTitle: \($title)\n\nDescription: \($body)\n\nURL: \($url)"}')" $DISCORD_WEBHOOK_URL
