@@ -16,4 +16,4 @@ jobs:
         ISSUE_TITLE=$(echo "${{ github.event.issue.title }}" | jq -sRr @uri)
         ISSUE_BODY=$(echo "${{ github.event.issue.body }}" | jq -sRr @uri)
         ISSUE_URL=${{ github.event.issue.html_url }}
-        curl -X POST -H "Content-Type: application/json" -d "$(jq -n --arg title "${ISSUE_TITLE}" --arg body "${ISSUE_BODY}" --arg url "${ISSUE_URL}" '{content: "**New Issue Created**\n\nTitle: \($title)\n\nDescription: \($body)\n\nURL: \($url)"}')" $DISCORD_WEBHOOK_URL
+        curl -X POST -H "Content-Type: application/json" -d "{\"content\":\"**New Issue Created**\n\nTitle: ${ISSUE_TITLE}\n\nDescription: ${ISSUE_BODY}\n\nURL: ${ISSUE_URL}\"}" "${DISCORD_WEBHOOK_URL}"
