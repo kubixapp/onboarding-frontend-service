@@ -7,7 +7,7 @@ on:
 jobs:
   notify-discord:
     runs-on: ubuntu-latest
-    name: Linux Test Job
+    name: Notify Team
     steps:
     - name: Linux Test Info
       uses: rjstone/discord-webhook-notify@v1
@@ -18,7 +18,7 @@ jobs:
         avatarUrl: https://github.githubassets.com/images/modules/logos_page/Octocat.png
         description: ${{ github.event.issue.title }}
         details: ${{ github.event.issue.body }}
-        footer: ${{ github.event.issue.html_url }}
-        text: New Issue created.
+        footer: Kubix App
+        text: New Issue created. URL (${{ github.event.issue.html_url }})
         webhookUrl: ${{ secrets.DISCORD_WEBHOOK_URL }}
     
