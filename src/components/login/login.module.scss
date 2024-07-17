@@ -63,7 +63,13 @@
                     font-family: 'Poppins';
                     font-size: 12px;
                     font-weight: 200;
-                    color: #74797F
+                    color: #74797F;
+                    transition: .2s all;
+
+                    &:hover {
+                        color: #563AFF;
+                        transition: .2s all;
+                    }
                 }
             }
         }

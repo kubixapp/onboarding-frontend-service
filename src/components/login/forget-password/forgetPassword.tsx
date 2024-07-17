@@ -1,7 +1,15 @@
 import ForgetStyles from "./forgetPassword.module.scss";
-import { Input, Button } from "../../components";
+import { Input, Button } from "../..";
+import { useNavigate } from "react-router-dom";
 
 export const ForgetPassword = () => {
+
+  const navigate = useNavigate();
+
+  const handleButton = () => {
+    navigate("/update-password");
+  }
+
   return (
     <div className={`onboard-container ${ForgetStyles.container}`}>
       <div className={`card-container ${ForgetStyles.card}`}>
@@ -18,7 +26,7 @@ export const ForgetPassword = () => {
           source="/png/gmail.png"
         />
         <div className={ForgetStyles.button_container}>
-          <Button className="black-button" label="Submit" />
+          <Button className="black-button" label="Submit" handler={handleButton} />
           <p
             className="checking_account_text"
             id={ForgetStyles.checking_account_text}

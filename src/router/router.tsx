@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import { LoginPage, ForgetPasswordPage } from "../pages";
+import { LoginPage, ForgetPasswordPage, UpdatePasswordPage } from "../pages";
 import { AuthProvider } from "../components";
 
 export const router = createBrowserRouter([
@@ -10,5 +10,9 @@ export const router = createBrowserRouter([
     {
         path: "/forget-password",
         element: <AuthProvider element={<ForgetPasswordPage />} />
+    },
+    {
+        path: "/update-password",
+        element: <AuthProvider element={<UpdatePasswordPage />} />
     }
 ])

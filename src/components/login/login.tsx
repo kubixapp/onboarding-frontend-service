@@ -55,6 +55,8 @@ export const Login = () => {
     onSuccess: (response) => {
       handlePopup();
       localStorage.setItem("kubix_portal_access_token", response.data.access_token);
+      // formik.values.email = "";
+      // formik.values.password = "";
     },
     onError: (error: any) => {
       setErrorMessage(error.response.data.message)
