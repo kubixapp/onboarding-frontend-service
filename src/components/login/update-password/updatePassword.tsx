@@ -10,14 +10,14 @@ export const UpdatePassword = () => {
           <Input
             label="Create new password"
             name="password"
-            placeholder="example@gmail.com"
+            placeholder="********"
             source="/png/lock.png"
             passwordInput
           />
           <Input
             label="Confirm password"
             name="password"
-            placeholder="example@gmail.com"
+            placeholder="********"
             source="/png/lock.png"
             passwordInput
           />
