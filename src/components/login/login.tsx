@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import { useEffect, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { Axios } from "../../axios/axios";
+import { Link } from "react-router-dom";
 
 export const Login = () => {
   const [isOpenPopup, setIsPopupOpen] = useState(false);
@@ -63,9 +64,9 @@ export const Login = () => {
   //  Handling request end
 
   return (
-    <div className={LoginStyles.container}>
-      <div className={LoginStyles.information} id={LoginStyles.information}>
-        <h1 id={LoginStyles.head_text}>Welcome Back!</h1>
+    <div className={`onboard-container ${LoginStyles.container}`}>
+      <div className={`card-container ${LoginStyles.card}`}>
+        <h1 className="head-text">Welcome Back!</h1>
         <div className={LoginStyles.media_container}>
           <div className={LoginStyles.media}>
             <img src="/png/google.png" alt="google icon" />
@@ -106,26 +107,25 @@ export const Login = () => {
               error={formik.touched.password && formik.errors.password !== undefined}
               errorMessage={formik.errors.password}
             />
-            <p>Forget Password?</p>
+            <Link to="/forget-password" className={LoginStyles.link}>Forget Password?</Link>
           </div>
           <Button className="black-button" label="Log in" type="submit" isPending={isPending} />
         </form>
         <p
-          className={LoginStyles.open_account_text}
-          id={LoginStyles.open_account_text}
+          className="checking_account_text"
         >
           Don’t have an account? <span>Open Account!</span>
         </p>
       </div>
-      <div className={LoginStyles.page_gif}>
+      <div className="page-gif">
         <img src="/gif/login.gif" alt="login gif" />
       </div>
       {
-        (isOpenPopup || errorMessage !== "") && <div className={LoginStyles.blur_div}></div>
+        (isOpenPopup || errorMessage !== "") && <div className="blur-div"></div>
       }
       {
         isOpenPopup && 
-        <div className={LoginStyles.popup}>
+        <div className="popup">
           <Popup headText="Congrulations!" buttonLabel="Next" openedPopup={isOpenPopup} source="/gif/success.gif" buttonHandler={handlePopup} />
         </div>
       }
