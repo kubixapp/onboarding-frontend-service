@@ -1,3 +1,4 @@
+
 .sign_popup {
   position: absolute;
   max-width: 818px;
@@ -113,6 +114,22 @@
   }
 }
 
+@media (min-width: 651px) {
+  .sign_popup .main {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .sign_popup .main .content_container {
+    width: 50%;
+  }
+
+  .sign_popup .main .animated_image {
+    width: 50%;
+  }
+}
+
 @media (max-width: 1340px) {
   #head_text {
     font-size: 28px;
@@ -123,5 +140,4 @@
   #content_container {
     width: 100%;
   }
-
 }
