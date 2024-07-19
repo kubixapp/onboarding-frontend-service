@@ -1,5 +1,6 @@
 import UpdateStyles from "./updatePassword.module.scss";
 import { Input, Button } from "../../../components";
+import { Link } from "react-router-dom";
 
 export const UpdatePassword = () => {
   return (
@@ -32,7 +33,7 @@ export const UpdatePassword = () => {
           className="checking_account_text"
           id={UpdateStyles.checking_account_text}
         >
-          Don’t have an account? <span>Open Account!</span>
+          Don’t have an account? <Link to="/register">Open Account!</Link>
         </p>
       </div>
       <div className="page-gif">

@@ -69,18 +69,18 @@ export const Login = () => {
     <div className={`onboard-container ${LoginStyles.container}`}>
       <div className={`card-container ${LoginStyles.card}`}>
         <h1 className="head-text">Welcome Back!</h1>
-        <div className={LoginStyles.media_container}>
-          <div className={LoginStyles.media}>
+        <div className="media_container">
+          <div className="media">
             <img src="/png/google.png" alt="google icon" />
           </div>
-          <div className={LoginStyles.media}>
+          <div className="media">
             <img src="/svg/facebook.svg" alt="facebook icon" />
           </div>
-          <div className={LoginStyles.media}>
+          <div className="media">
             <img src="/svg/linkedin.svg" alt="linkedin icon" />
           </div>
         </div>
-        <div className={LoginStyles.grey_line}>
+        <div className="grey_line">
           <span>or</span>
         </div>
         <form className={LoginStyles.input_container} onSubmit={formik.handleSubmit}>
@@ -115,8 +115,9 @@ export const Login = () => {
         </form>
         <p
           className="checking_account_text"
+          id={LoginStyles.checking_account_text}
         >
-          Don’t have an account? <span>Open Account!</span>
+          Don’t have an account? <Link to="/register">Open Account!</Link>
         </p>
       </div>
       <div className="page-gif">

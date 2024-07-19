@@ -1,6 +1,6 @@
 import ForgetStyles from "./forgetPassword.module.scss";
 import { Input, Button } from "../..";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const ForgetPassword = () => {
 
@@ -24,6 +24,7 @@ export const ForgetPassword = () => {
           name="email"
           placeholder="example@gmail.com"
           source="/png/gmail.png"
+          type="email"
         />
         <div className={ForgetStyles.button_container}>
           <Button className="black-button" label="Submit" handler={handleButton} />
@@ -31,7 +32,7 @@ export const ForgetPassword = () => {
             className="checking_account_text"
             id={ForgetStyles.checking_account_text}
           >
-            Don’t have an account? <span>Open Account!</span>
+            Don’t have an account? <Link to="/register">Open Account!</Link>
           </p>
         </div>
       </div>
