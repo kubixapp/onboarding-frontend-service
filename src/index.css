@@ -156,8 +156,7 @@
 
 .back-button {
   position: absolute;
-  top: 94px;
-  width: 100%;
+  top: 80px;
   display: flex;
   align-items: center;
   gap: 4px;

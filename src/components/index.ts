@@ -6,3 +6,4 @@ export * from "./popup";
 export * from "./register";
 export * from "./create-account";
 export * from "./select";
+export * from "./checkbox";

@@ -1,16 +1,19 @@
 import ConfirmStyles from "./confirmEmail.module.scss";
 import { Input, Button } from "../../../components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FC } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useMutation } from "@tanstack/react-query";
+import { Axios } from "../../../axios/axios";
 
 interface ConfirmEmailProps {
-  handler: () => void;
   email: string;
 }
 
-export const ConfirmEmail: FC<ConfirmEmailProps> = ({ handler, email }) => {
+export const ConfirmEmail: FC<ConfirmEmailProps> = ({ email }) => {
+
+  const navigate = useNavigate();
   
   const formik = useFormik({
     initialValues: {
@@ -22,8 +25,17 @@ export const ConfirmEmail: FC<ConfirmEmailProps> = ({ handler, email }) => {
       .length(6, "Confirmation code must be 6 digits")
     }),
     onSubmit: () => {
-      handler()
+      confirmOtp();
     }
+  })
+
+  const confirmationToken = localStorage.getItem("kubix_confirmation_token") || undefined;
+
+  const {mutate: confirmOtp, isPending: confirmOtpPending} = useMutation({
+    mutationKey: ["confirm-otp"],
+    mutationFn: () => Axios("PUT", "/auth/confirm-otp", undefined, formik.values.otp, confirmationToken),
+    onSuccess: () => navigate("/create-account"),
+    onError: (error) => console.log(error),
   })
 
   return (
@@ -52,7 +64,7 @@ export const ConfirmEmail: FC<ConfirmEmailProps> = ({ handler, email }) => {
         </p>
       </div>
       <div className={ConfirmStyles.button_container}>
-        <Button className="black-button" label="Next"  />
+        <Button className="black-button" label="Next" isPending={confirmOtpPending} />
         <p
           className="checking_account_text"
           id={ConfirmStyles.checking_account_text}

@@ -51,7 +51,7 @@ export const Login = () => {
 
   const { mutate: Login, isPending } = useMutation({
     mutationKey: ["login"],
-    mutationFn: () => Axios("POST", "/auth/sign-in", undefined, undefined, undefined, undefined, formik.values),
+    mutationFn: () => Axios("POST", "/auth/sign-in", undefined, undefined, undefined, formik.values),
     onSuccess: (response) => {
       handlePopup();
       localStorage.setItem("kubix_portal_access_token", response.data.access_token);
@@ -134,7 +134,7 @@ export const Login = () => {
       }
       {
         errorMessage !== "" && 
-        <div className={LoginStyles.popup}>
+        <div className="popup">
           <Popup headText={errorMessage} buttonLabel="Try Again" openedPopup={errorMessage !== ""} source="/gif/error.gif" buttonHandler={() => setErrorMessage("")} />
         </div>
       }

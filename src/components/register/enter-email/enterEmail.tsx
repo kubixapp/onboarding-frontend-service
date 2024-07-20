@@ -4,6 +4,8 @@ import EnterStyles from "./enterEmail.module.scss";
 import { FC } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useMutation } from "@tanstack/react-query";
+import { Axios } from "../../../axios/axios";
 
 interface EnterEmailProps {
   handler: () => void;
@@ -22,9 +24,19 @@ export const EnterEmail: FC<EnterEmailProps> = ({ handler, setEmail }) => {
       .email("Please enter a valid email")
     }),
     onSubmit: () => {
-      handler()
-      setEmail(formik.values.email);
+      sendOtp();
     }
+  })
+
+  const { mutate: sendOtp, isPending: sendOtpPending } = useMutation({
+    mutationKey: ["send-otp"],
+    mutationFn: () => Axios("PUT", "/auth/send-otp-email", formik.values.email),
+    onSuccess: (response) => {
+      setEmail(formik.values.email);
+      handler();
+      localStorage.setItem("kubix_confirmation_token", response.data);
+    },
+    onError: (error) => console.log(error),
   })
   return (
     <form onSubmit={formik.handleSubmit} className={`card-container ${EnterStyles.card}`}>
@@ -58,7 +70,7 @@ export const EnterEmail: FC<EnterEmailProps> = ({ handler, setEmail }) => {
         error={formik.touched.email && formik.errors.email !== undefined}
         errorMessage={formik.errors.email}
       />
-      <Button className="black-button" label="Next" type="submit" />
+      <Button className="black-button" label="Next" type="submit" isPending={sendOtpPending} />
       <p
         className="checking_account_text"
         id={EnterStyles.checking_account_text}

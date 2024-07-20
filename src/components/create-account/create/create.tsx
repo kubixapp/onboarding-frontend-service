@@ -16,6 +16,7 @@ export const Create = () => {
           source="/png/user.png"
           type="text"
           required
+          
         />
         <Input
           label="Password"
@@ -27,14 +28,14 @@ export const Create = () => {
         />
         <Input
           label="Company Name"
-          name="company"
+          name="companyName"
           placeholder="Kubix"
           type="text"
           source="/png/physics.png"
         />
         <Select
           label="Select type of use"
-          name="use-type"
+          name="typeOfUse"
           placeholder="Select type of use"
           options={typeOptions}
         />

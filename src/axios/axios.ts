@@ -3,7 +3,6 @@ import axios from "axios";
 export async function Axios(
   method: string,
   url: string,
-  token?: string,
   cEmail?: string,
   otp?: string,
   confirmationToken?: string,
@@ -12,7 +11,6 @@ export async function Axios(
   const baseUrl = import.meta.env.VITE_APP_KUBIX_BASE_URL;
 
   const headers: { [key: string]: string } = {};
-  if (token) headers["Authorization"] = `Bearer ${token}`;
   if (cEmail) headers["cEmail"] = cEmail;
   if (otp) headers["opt"] = otp;
   if (confirmationToken) headers["token"] = confirmationToken;
