@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import { Input, Button } from "../../../components";
+import { Input, Button, Popup } from "../../../components";
 import EnterStyles from "./enterEmail.module.scss";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useMutation } from "@tanstack/react-query";
@@ -13,6 +13,7 @@ interface EnterEmailProps {
 }
 
 export const EnterEmail: FC<EnterEmailProps> = ({ handler, setEmail }) => {
+  const [errorMessage, setErrorMessage] = useState("");
 
   const formik = useFormik({
     initialValues: {
@@ -28,6 +29,14 @@ export const EnterEmail: FC<EnterEmailProps> = ({ handler, setEmail }) => {
     }
   })
 
+  useEffect(() => {
+    if ( errorMessage !== "" ) {
+      document.body.classList.add('no-scroll');
+    } else {
+      document.body.classList.remove('no-scroll');
+    }
+  }, [errorMessage])
+
   const { mutate: sendOtp, isPending: sendOtpPending } = useMutation({
     mutationKey: ["send-otp"],
     mutationFn: () => Axios("PUT", "/auth/send-otp-email", formik.values.email),
@@ -36,7 +45,10 @@ export const EnterEmail: FC<EnterEmailProps> = ({ handler, setEmail }) => {
       handler();
       localStorage.setItem("kubix_confirmation_token", response.data);
     },
-    onError: (error) => console.log(error),
+    onError: (error) => {
+      setErrorMessage("Invalid credentials")
+      console.log(error)
+    },
   })
   return (
     <form onSubmit={formik.handleSubmit} className={`card-container ${EnterStyles.card}`}>
@@ -77,6 +89,15 @@ export const EnterEmail: FC<EnterEmailProps> = ({ handler, setEmail }) => {
       >
         Already have an account? <Link to="/">Log in now!</Link>
       </p>
+      {
+        errorMessage !== "" && <div className="blur-div"></div>
+      }
+      {
+        errorMessage !== "" && 
+        <div className="popup">
+          <Popup headText={errorMessage} buttonLabel="Try again" openedPopup={errorMessage !== ""} source="/gif/error.gif" buttonHandler={() => setErrorMessage("")} />
+        </div>
+      }
     </form>
   );
 };

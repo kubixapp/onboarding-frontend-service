@@ -1,7 +1,7 @@
 import ConfirmStyles from "./confirmEmail.module.scss";
-import { Input, Button } from "../../../components";
+import { Input, Button, Popup } from "../../../components";
 import { Link, useNavigate } from "react-router-dom";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useMutation } from "@tanstack/react-query";
@@ -12,34 +12,56 @@ interface ConfirmEmailProps {
 }
 
 export const ConfirmEmail: FC<ConfirmEmailProps> = ({ email }) => {
-
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
-  
+
   const formik = useFormik({
     initialValues: {
-      otp: ""
+      otp: "",
     },
     validationSchema: Yup.object({
       otp: Yup.string()
-      .required("Confirmation code is required")
-      .length(6, "Confirmation code must be 6 digits")
+        .required("Confirmation code is required")
+        .length(6, "Confirmation code must be 6 digits"),
     }),
     onSubmit: () => {
       confirmOtp();
-    }
-  })
+    },
+  });
 
-  const confirmationToken = localStorage.getItem("kubix_confirmation_token") || undefined;
+  const confirmationToken =
+    localStorage.getItem("kubix_confirmation_token") || undefined;
 
-  const {mutate: confirmOtp, isPending: confirmOtpPending} = useMutation({
+  const { mutate: confirmOtp, isPending: confirmOtpPending } = useMutation({
     mutationKey: ["confirm-otp"],
-    mutationFn: () => Axios("PUT", "/auth/confirm-otp", undefined, formik.values.otp, confirmationToken),
+    mutationFn: () =>
+      Axios(
+        "PUT",
+        "/auth/confirm-otp",
+        undefined,
+        formik.values.otp,
+        confirmationToken
+      ),
     onSuccess: () => navigate("/create-account"),
-    onError: (error) => console.log(error),
-  })
+    onError: (error) => {
+      setErrorMessage("Invalid Credentials");
+      console.log(error);
+    },
+  });
+
+  useEffect(() => {
+    if (errorMessage !== "") {
+      document.body.classList.add("no-scroll");
+    } else {
+      document.body.classList.remove("no-scroll");
+    }
+  }, [errorMessage]);
 
   return (
-    <form onSubmit={formik.handleSubmit} className={`card-container ${ConfirmStyles.card}`}>
+    <form
+      onSubmit={formik.handleSubmit}
+      className={`card-container ${ConfirmStyles.card}`}
+    >
       <div className={ConfirmStyles.card_header}>
         <h1 className="head-text">Confirm your email address</h1>
         <p className="paragraph">
@@ -57,14 +79,18 @@ export const ConfirmEmail: FC<ConfirmEmailProps> = ({ email }) => {
           handleBlur={formik.handleBlur}
           error={formik.touched.otp && formik.errors.otp !== undefined}
           errorMessage={formik.errors.otp}
-
         />
         <p>
-          Check your spam if you haven't received the code. <span>Receive new code</span>
+          Check your spam if you haven't received the code.{" "}
+          <span>Receive new code</span>
         </p>
       </div>
       <div className={ConfirmStyles.button_container}>
-        <Button className="black-button" label="Next" isPending={confirmOtpPending} />
+        <Button
+          className="black-button"
+          label="Next"
+          isPending={confirmOtpPending}
+        />
         <p
           className="checking_account_text"
           id={ConfirmStyles.checking_account_text}
@@ -72,6 +98,18 @@ export const ConfirmEmail: FC<ConfirmEmailProps> = ({ email }) => {
           Don’t have an account? <Link to="/register">Open Account!</Link>
         </p>
       </div>
+      {errorMessage !== "" && <div className="blur-div"></div>}
+      {errorMessage !== "" && (
+        <div className="popup">
+          <Popup
+            headText={errorMessage}
+            buttonLabel="Try again"
+            openedPopup={errorMessage !== ""}
+            source="/gif/error.gif"
+            buttonHandler={() => setErrorMessage("")}
+          />
+        </div>
+      )}
     </form>
   );
 };
