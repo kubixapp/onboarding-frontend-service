@@ -3,10 +3,12 @@ import { Create, Complete, Popup } from "./../../components";
 import CreateAccountStyles from "./createAccount.module.scss";
 import { useMutation } from "@tanstack/react-query";
 import { Axios } from "../../axios/axios";
+import errorsData from "../../../public/errors.json";
+import { Errors } from "../../model";
 
 export const CreateAccount = () => {
   const [popupIsOpen, setPopupIsOpen] = useState(false)
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessageCode, setErrorMessageCode] = useState("");
   const [completeSide, setCompleteSide] = useState(false);
   const [userData, setUserData] = useState({
     fullname: "",
@@ -16,6 +18,8 @@ export const CreateAccount = () => {
     projectName: "",
     whereDidYouHear: "",
   })
+
+  const errors: Errors = errorsData;
 
   const handleUserData = (name: string, value: string) => {
     setUserData({ ...userData, [name]: value })
@@ -40,18 +44,18 @@ export const CreateAccount = () => {
       setPopupIsOpen(true)
       localStorage.setItem("kubix_portal_access_token", response.data.access_token);
     },
-    onError: () => {
-      setErrorMessage("Invalid Credentials")
+    onError: (error: any) => {
+      setErrorMessageCode(error.response.data.code)
     }
   })
 
   useEffect(() => {
-    if (popupIsOpen || errorMessage !== "" ) {
+    if (popupIsOpen || errorMessageCode !== "" ) {
       document.body.classList.add('no-scroll');
     } else {
       document.body.classList.remove('no-scroll');
     }
-  }, [popupIsOpen, errorMessage])
+  }, [popupIsOpen, errorMessageCode])
 
   return (
     <div className={`onboard-container ${CreateAccountStyles.container}`}>
@@ -68,7 +72,7 @@ export const CreateAccount = () => {
         <img src="/gif/create-account.gif" alt="forget-password gif" />
       </div>
       {
-        (popupIsOpen || errorMessage !== "" ) && <div className="blur-div"></div>
+        (popupIsOpen || errorMessageCode !== "" ) && <div className="blur-div"></div>
       }
       {
         popupIsOpen && 
@@ -77,9 +81,9 @@ export const CreateAccount = () => {
         </div>
       }
       {
-        errorMessage !== "" && 
+        errorMessageCode !== "" && 
         <div className="popup">
-          <Popup headText={errorMessage} buttonLabel="Try again" openedPopup={errorMessage !== ""} source="/gif/error.gif" buttonHandler={() => setErrorMessage("")} />
+          <Popup headText={errors[errorMessageCode]} buttonLabel="Try again" openedPopup={errorMessageCode !== ""} source="/gif/error.gif" buttonHandler={() => setErrorMessageCode("")} />
         </div>
       }
     </div>

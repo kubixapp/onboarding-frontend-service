@@ -6,10 +6,14 @@ import { useEffect, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { Axios } from "../../axios/axios";
 import { Link } from "react-router-dom";
+import errorsData from "../../../public/errors.json";
+import { Errors } from "../../model";
 
 export const Login = () => {
   const [isOpenPopup, setIsPopupOpen] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessageCode, setErrorMessageCode] = useState("");
+
+  const errors: Errors = errorsData;
 
   // Form validations start
 
@@ -38,12 +42,12 @@ export const Login = () => {
   }
 
   useEffect(() => {
-    if (isOpenPopup || errorMessage !== "" ) {
+    if (isOpenPopup || errorMessageCode !== "" ) {
       document.body.classList.add('no-scroll');
     } else {
       document.body.classList.remove('no-scroll');
     }
-  }, [isOpenPopup, errorMessage])
+  }, [isOpenPopup, errorMessageCode])
 
   // Popup handling end
 
@@ -59,7 +63,7 @@ export const Login = () => {
       // formik.values.password = "";
     },
     onError: (error: any) => {
-      setErrorMessage(error.response.data.message)
+      setErrorMessageCode(error.response.data.code)
     },
   })
 
@@ -124,7 +128,7 @@ export const Login = () => {
         <img src="/gif/login.gif" alt="login gif" />
       </div>
       {
-        (isOpenPopup || errorMessage !== "") && <div className="blur-div"></div>
+        (isOpenPopup || errorMessageCode !== "") && <div className="blur-div"></div>
       }
       {
         isOpenPopup && 
@@ -133,9 +137,9 @@ export const Login = () => {
         </div>
       }
       {
-        errorMessage !== "" && 
+        errorMessageCode !== "" && 
         <div className="popup">
-          <Popup headText={errorMessage} buttonLabel="Try Again" openedPopup={errorMessage !== ""} source="/gif/error.gif" buttonHandler={() => setErrorMessage("")} />
+          <Popup headText={errors[errorMessageCode]} buttonLabel="Try Again" openedPopup={errorMessageCode !== ""} source="/gif/error.gif" buttonHandler={() => setErrorMessageCode("")} />
         </div>
       }
     </div>

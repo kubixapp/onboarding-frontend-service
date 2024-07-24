@@ -6,13 +6,17 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useMutation } from "@tanstack/react-query";
 import { Axios } from "../../../axios/axios";
+import errorsData from "../../../../public/errors.json";
+import { Errors } from "../../../model";
 
 interface ConfirmEmailProps {
   email: string;
 }
 
 export const ConfirmEmail: FC<ConfirmEmailProps> = ({ email }) => {
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessageCode, setErrorMessageCode] = useState("");
+  const errors: Errors = errorsData
+
   const navigate = useNavigate();
 
   const formik = useFormik({
@@ -43,19 +47,18 @@ export const ConfirmEmail: FC<ConfirmEmailProps> = ({ email }) => {
         confirmationToken
       ),
     onSuccess: () => navigate("/create-account"),
-    onError: (error) => {
-      setErrorMessage("Invalid Credentials");
-      console.log(error);
+    onError: (error: any) => {
+      setErrorMessageCode(error.response.data.code);
     },
   });
 
   useEffect(() => {
-    if (errorMessage !== "") {
+    if (errorMessageCode !== "") {
       document.body.classList.add("no-scroll");
     } else {
       document.body.classList.remove("no-scroll");
     }
-  }, [errorMessage]);
+  }, [errorMessageCode]);
 
   return (
     <form
@@ -98,15 +101,15 @@ export const ConfirmEmail: FC<ConfirmEmailProps> = ({ email }) => {
           Don’t have an account? <Link to="/register">Open Account!</Link>
         </p>
       </div>
-      {errorMessage !== "" && <div className="blur-div"></div>}
-      {errorMessage !== "" && (
+      {errorMessageCode !== "" && <div className="blur-div"></div>}
+      {errorMessageCode !== "" && (
         <div className="popup">
           <Popup
-            headText={errorMessage}
+            headText={errors[errorMessageCode]}
             buttonLabel="Try again"
-            openedPopup={errorMessage !== ""}
+            openedPopup={errorMessageCode !== ""}
             source="/gif/error.gif"
-            buttonHandler={() => setErrorMessage("")}
+            buttonHandler={() => setErrorMessageCode("")}
           />
         </div>
       )}
