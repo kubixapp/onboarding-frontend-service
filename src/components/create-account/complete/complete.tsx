@@ -14,7 +14,7 @@ export const Complete: FC<CompleteProps> = ({dataHandler, apiHandler, apiPending
 
   return (
     <div className={`card-container ${CompleteStyles.card}`}>
-      <h1 className="head-text">Find your password</h1>
+      <h1 className="head-text">Let’s go!</h1>
       <div className={CompleteStyles.input_container}>
         <Input
           label="Project name"
@@ -27,7 +27,7 @@ export const Complete: FC<CompleteProps> = ({dataHandler, apiHandler, apiPending
         <Select
           label="Where did you hear?"
           name="whereDidYouHear"
-          placeholder="Where did yoou hear?"
+          placeholder="Where did you hear?"
           source="/png/signpost.png"
           options={hearOptions}
           handleSelectValue={dataHandler}

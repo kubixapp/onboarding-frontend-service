@@ -29,7 +29,7 @@ export const Create: FC<CreateProps> = ({ sideHandler, dataHandler }) => {
 
   return (
     <form onSubmit={formik.handleSubmit} className={`card-container ${CreateStyles.card}`}>
-      <h1 className="head-text">Find your password</h1>
+      <h1 className="head-text">Let’s go!</h1>
       <div className={CreateStyles.input_container}>
         <Input
           label="Full name"

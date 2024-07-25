@@ -15,3 +15,10 @@
         margin-top: 4px;
     }
 }
+
+@media (max-width: 1440px) {
+    .card {
+        padding: 35px 25px;
+        gap: 25px;
+    }
+}

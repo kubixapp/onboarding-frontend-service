@@ -1,38 +1,43 @@
 .container {
+  > .card {
+    padding: 48px 25px 32px;
+    gap: 32px;
 
-    > .card {
-        padding: 48px 25px 32px;
-        gap: 32px;
-        
-        > .input_container {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
+    > .input_container {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
 
-            > .password_input {
-                display: flex;
-                flex-direction: column;
-                gap: 5px;
+      > .password_input {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
 
-                > .link {
-                    text-decoration: none;
-                    text-align: end;
-                    font-family: 'Poppins';
-                    font-size: 12px;
-                    font-weight: 200;
-                    color: #74797F;
-                    transition: .2s all;
+        > .link {
+          text-decoration: none;
+          text-align: end;
+          font-family: "Poppins";
+          font-size: 12px;
+          font-weight: 200;
+          color: #74797f;
+          transition: 0.2s all;
 
-                    &:hover {
-                        color: #563AFF;
-                        transition: .2s all;
-                    }
-                }
-            }
+          &:hover {
+            color: #563aff;
+            transition: 0.2s all;
+          }
         }
+      }
     }
+  }
 }
 
 #checking_account_text {
-    margin-top: 60px;
+  margin-top: 60px;
+}
+
+@media (max-width: 1440px) {
+  #checking_account_text {
+    margin-top: 20px;
+  }
 }
