@@ -1,0 +1,30 @@
+.card {
+    padding: 48px 25px;
+    gap: 32px;
+
+    > .input_container {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    > .checkbox_container {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    > .button_container {
+        display: flex;
+        flex-direction: column;
+        gap: 26px;
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 1440px) {
+    .card {
+        padding: 35px 25px;
+        gap: 25px;
+    }
+}

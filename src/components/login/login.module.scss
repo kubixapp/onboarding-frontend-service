@@ -1,171 +1,43 @@
 .container {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 24px;
+  > .card {
+    padding: 48px 25px 32px;
+    gap: 32px;
 
-    > .information {
-        min-width: 608px;
-        border-radius: 32px;
-        padding: 48px 25px 32px;
-        border: 1px solid #DEE2E6;
-        background-color: #fff;
+    > .input_container {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+
+      > .password_input {
         display: flex;
         flex-direction: column;
-        gap: 32px;
-        box-shadow: 0px 20px 24px -4px rgba(118, 118, 118, 0.08), 0px 8px 8px -4px rgba(35, 35, 35, 0.03);
+        gap: 5px;
 
-        > h1 {
-            font-family: 'Clash Display';
-            text-align: center;
-            font-size: 34px;
-            font-weight: 600;
-            line-height: 44px;
-            color: #000;
+        > .link {
+          text-decoration: none;
+          text-align: end;
+          font-family: "Poppins";
+          font-size: 12px;
+          font-weight: 200;
+          color: #74797f;
+          transition: 0.2s all;
+
+          &:hover {
+            color: #563aff;
+            transition: 0.2s all;
+          }
         }
-        
-        > .media_container {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 24px;
-
-            > .media {
-                width: 30%;
-                max-width: 170px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                height: 60px;
-                background-color: #F7F7F7;
-
-                > img {
-                    width: 28px;
-                    height: 28px;
-                }
-            }
-        }
-
-        > .grey_line {
-            width: 100%;
-            height: 1px;
-            background-color: #DEE2E6;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            > span {
-                width: 52px;
-                height: 24px;
-                background-color: #fff;
-                text-align: center;
-                font-family: 'Poppins';
-                font-size: 16px;
-                font-weight: 500;
-                color: #74797F;
-            }
-        }
-        
-        > .input_container {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-
-            > .password_input {
-                display: flex;
-                flex-direction: column;
-                gap: 5px;
-
-                > p {
-                    text-align: end;
-                    font-family: 'Poppins';
-                    font-size: 12px;
-                    font-weight: 200;
-                    color: #74797F
-                }
-            }
-        }
-
-        > .open_account_text {
-            margin-top: 60px;
-            text-align: center;
-            font-family: 'Poppins', sans-serif;
-            font-size: 16px;
-            font-weight: 300;
-            letter-spacing: 0.2px;
-            line-height: 20px;
-            color: #313437;
-
-            > span {
-                color: #563AFF;
-                font-weight: 600;
-            }
-        }
+      }
     }
-
-    > .page_gif {
-        width: 100%;
-        max-width: 708px;
-        max-height: 677px;
-        overflow: hidden;
-
-        > img {
-            width: 100%;
-        }
-    }
-
-    > .blur_div {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: #313437;
-        opacity: 0.4;
-    }
-
-    > .popup {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+  }
 }
 
-@media (max-width: 1340px) {
-    .container {
-        flex-direction: column-reverse;
-    }
+#checking_account_text {
+  margin-top: 60px;
 }
 
-@media (max-width: 650px) {
-    .page_gif {
-        display: none;
-    }
-
-    #information {
-        width: 100%;
-        min-width: unset;
-        border-radius: 0;
-        border: 1px solid #fff;
-        box-shadow: none;
-    }
-
-    #open_account_text {
-        position: absolute;
-        text-align: center;
-        width: 100%;
-        left: 0;
-        bottom: 54px;
-    }
-
-    #head_text {
-        font-size: 28px;
-    }
+@media (max-width: 1440px) {
+  #checking_account_text {
+    margin-top: 20px;
+  }
 }

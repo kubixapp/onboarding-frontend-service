@@ -42,8 +42,8 @@ export const Input: FC<InputProps> = ({
     if (handleInputValue) {
       handleInputValue(name, inputTargetValue);
     }
-    if(handleChange) {
-        handleChange(e);
+    if (handleChange) {
+      handleChange(e);
     }
   };
   return (
@@ -60,7 +60,7 @@ export const Input: FC<InputProps> = ({
         {source && <img alt="input icon" src={source} />}
         <input
           id={name}
-          type={type ? type : (visible ? "text" : "password") }
+          type={type ? type : visible ? "text" : "password"}
           placeholder={placeholder}
           value={value && value}
           onInput={handleInput}
